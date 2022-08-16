@@ -1,0 +1,110 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&family=Source+Sans+Pro&display=swap');
+
+.font-regular {
+  font-family: 'Source Sans Pro', Helvetica, sans-serif;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 18px;
+}
+
+.font-medium {
+  font-family: 'Source Sans Pro', Helvetica, sans-serif;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 18px;
+}
+
+.font-bold {
+  font-family: 'Source Sans Pro', Helvetica, sans-serif;
+  font-style: normal;
+  font-weight: 700;
+  line-height: 18px;
+}
+
+.fsz-12 {
+  font-size: 12px;
+}
+
+.fsz-14 {
+  font-size: 14px;
+}
+
+.fsz-16 {
+  font-size: 16px;
+}
+
+.fsz-22 {
+  font-size: 22px;
+}
+
+.restrict {
+  cursor: not-allowed;
+}
+
+.io-subheading {
+  font-size: 17px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 18px;
+}
+
+.red {
+  color: #FF7851;
+}
+
+.per-page {
+  width: min-content;
+}
+
+.multiselect-custom {
+  outline: .1px solid #dddddd;
+  border-radius: 5px;
+}
+
+.invalid {
+  outline: .1px solid #FF7851;
+  border-radius: 5px;
+}
+
+.btn {
+  color: white;
+}
+
+.action-wrapper {
+  margin-left: 0;
+}
+
+.action-btn {
+  cursor: pointer;
+  padding: 2px 5px;
+  margin: 2px;
+  background-color: #eafff4;
+  color: #69aa8a;
+  border-radius: 4px;
+
+  &:hover {
+    background-color: #bdf3d7;
+  }
+}
+
+.swal2-popup.swal2-modal {
+  border-radius: 10% !important;
+}
+
+::placeholder {
+  /* Chrome, Firefox, Opera, Safari 10.1+ */
+  opacity: .5 !important;
+  font-size: 14px;
+}
+
+:-ms-input-placeholder {
+  /* Internet Explorer 10-11 */
+  opacity: .5 !important;
+  font-size: 14px;
+}
+
+::-ms-input-placeholder {
+  /* Microsoft Edge */
+  opacity: .5 !important;
+  font-size: 14px;
+}
