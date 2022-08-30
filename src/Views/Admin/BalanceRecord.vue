@@ -16,7 +16,7 @@
       <template #header>
         <b-row>
           <b-col cols="8">
-            <h5 class="mb-0 mt-2">Tabel Kas</h5>
+            <h5 class="mb-0 mt-2">Tabel Riwayat Kas</h5>
           </b-col>
           <b-col cols="4" class="pr-0">
             <b-input-group>

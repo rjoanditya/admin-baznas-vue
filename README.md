@@ -1,120 +1,94 @@
-<!-- # ArchitectUI Vue Admin Dashboard (Lite)
 
-[ArchitectUI](https://dashboardpack.com/theme-details/architectui-dashboard-html-pro) is one of the most popular admin dashboard templates ever released. It is used by thousands of developers to create webapps and SaaS totaling 100 million monthly active users. We have converted this template to support varions frontend frameworks such as [Angular](https://dashboardpack.com/theme-details/architectui-angular-7-bootstrap-material-design-pro?v=7516fd43adaa), [Vue](https://dashboardpack.com/theme-details/architectui-dashboard-vue-pro) and [Rect](https://dashboardpack.com/theme-details/architectui-dashboard-react-pro?v=7516fd43adaa). Thos particular version of ArchitectUI is based on Vue. It is free to use for testing and non-commercial use. 
+# Laravel+Vue Crud Starter
 
-This version of template is provided for free with no support. It is actively maintained and all the dependencies are kept updated and template is always safe to use in production.
 
-For more admin template like this please check out our [Github profile](https://github.com/DashboardPack) or [website](https://dashboardpack.com/).
+[![Build Status](https://dev.azure.com/anowarhossain/laravel-vue-crud-starter/_apis/build/status/AnowarCST.laravel-vue-crud-starter?branchName=master)](https://dev.azure.com/anowarhossain/laravel-vue-crud-starter/_build/latest?definitionId=6&branchName=master)
 
-# ArchitectUI Preview
 
-![ArchitectUI Vue Template preview](https://colorlib.com/wp/wp-content/uploads/sites/2/architectui-vue-free.jpg) -->
+## About Repository
 
-<p align="center"><a href="https://vuejs.org" target="_blank" rel="noopener noreferrer"><img width="100" src="https://vuejs.org/images/logo.png" alt="Vue logo"></a></p>
-
+A very simple Laravel 8 + Vue 2 + AdminLTE 3 based Curd Starter template for SPA Application.
 <p align="center">
-  <a href="https://circleci.com/gh/vuejs/vue/tree/dev"><img src="https://img.shields.io/circleci/project/github/vuejs/vue/dev.svg?sanitize=true" alt="Build Status"></a>
-  <a href="https://codecov.io/github/vuejs/vue?branch=dev"><img src="https://img.shields.io/codecov/c/github/vuejs/vue/dev.svg?sanitize=true" alt="Coverage Status"></a>
-  <a href="https://npmcharts.com/compare/vue?minimal=true"><img src="https://img.shields.io/npm/dm/vue.svg?sanitize=true" alt="Downloads"></a>
-  <a href="https://www.npmjs.com/package/vue"><img src="https://img.shields.io/npm/v/vue.svg?sanitize=true" alt="Version"></a>
-  <a href="https://www.npmjs.com/package/vue"><img src="https://img.shields.io/npm/l/vue.svg?sanitize=true" alt="License"></a>
-  <a href="https://chat.vuejs.org/"><img src="https://img.shields.io/badge/chat-on%20discord-7289da.svg?sanitize=true" alt="Chat"></a>
+<img src="https://i.imgur.com/mZAHbUL.png">
+<img src="https://i.imgur.com/3hhoQnq.png">
+<img src="https://i.imgur.com/aHtQkYl.png">
+<img src="https://i.imgur.com/V7OuwLn.png">
 </p>
 
-## This repo is for Vue 2
+## Tech Specification
 
-You are looking at the repository for Vue 2. The repo for Vue 3 is [vuejs/core](https://github.com/vuejs/core).
+- Laravel 8
+- Vue 2 + VueRouter + vue-progressbar + sweetalert2 + laravel-vue-pagination
+- Laravel Passport
+- Admin LTE 3 + Bootstrap 4 + Font Awesome 5
+- PHPUnit Test Case/Test Coverage
 
-## Sponsors
+## Features
 
-Vue.js is an MIT-licensed open source project with its ongoing development made possible entirely by the support of these awesome [backers](https://github.com/vuejs/core/blob/main/BACKERS.md). If you'd like to join them, please consider [ sponsor Vue's development](https://vuejs.org/sponsor/).
+- Modal based Create+Edit, List with Pagination, Delete with Sweetalert
+- Login, Register, Forget+Reset Password as default auth
+- Profile, Update Profile, Change Password, Avatar
+- Product Management 
+- User Management
+- Settings: Categories, Tags
+- Frontend and Backend User ACL with Gate Policy (type: admin/user)
+- Simple Static Dashboard
+- Developer Options for OAuth Clients and Personal Access Token
+- Build with Docker
 
-<p align="center">
-  <a target="_blank" href="https://vuejs.org/sponsor/">
-    <img alt="sponsors" src="https://sponsors.vuejs.org/sponsors.svg">
-  </a>
-</p>
+## Installation
 
----
+- `git clone https://github.com/AnowarCST/laravel-vue-crud-starter.git`
+- `cd laravel-vue-crud-starter/`
+- `composer install`
+- `cp .env.example .env`
+- Update `.env` and set your database credentials
+- `php artisan key:generate`
+- `php artisan migrate`
+- `php artisan db:seed`
+- `php artisan passport:install`
+- `npm install`
+- `npm run dev`
+- `php artisan serve`
 
-## Introduction
+## Install with Docker
 
-Vue (pronounced `/vjuː/`, like view) is a **progressive framework** for building user interfaces. It is designed from the ground up to be incrementally adoptable, and can easily scale between a library and a framework depending on different use cases. It consists of an approachable core library that focuses on the view layer only, and an ecosystem of supporting libraries that helps you tackle complexity in large Single-Page Applications.
+- `docker-compose up -d`
+- `docker exec -it vue-starter /bin/bash`
+- `composer install`
+- `cp .env.example .env`
+- `php artisan key:generate`
+- `php artisan migrate`
+- `php artisan db:seed`
+- `php artisan passport:install`
+- Application http://localhost:8008/
+- Adminer for Database http://localhost:8080/
+- DBhost: yourIP:3307, user: root, Password: 123456
 
-#### Browser Compatibility
 
-Vue.js supports all browsers that are [ES5-compliant](https://kangax.github.io/compat-table/es5/) (IE8 and below are not supported).
+## Unit Test
 
-## Ecosystem
+#### run PHPUnit
 
-| Project               | Status                                                       | Description                                             |
-| --------------------- | ------------------------------------------------------------ | ------------------------------------------------------- |
-| [vue-router]          | [![vue-router-status]][vue-router-package]                   | Single-page application routing                         |
-| [vuex]                | [![vuex-status]][vuex-package]                               | Large-scale state management                            |
-| [vue-cli]             | [![vue-cli-status]][vue-cli-package]                         | Project scaffolding                                     |
-| [vue-loader]          | [![vue-loader-status]][vue-loader-package]                   | Single File Component (`*.vue` file) loader for webpack |
-| [vue-server-renderer] | [![vue-server-renderer-status]][vue-server-renderer-package] | Server-side rendering support                           |
-| [vue-class-component] | [![vue-class-component-status]][vue-class-component-package] | TypeScript decorator for a class-based API              |
-| [vue-rx]              | [![vue-rx-status]][vue-rx-package]                           | RxJS integration                                        |
-| [vue-devtools]        | [![vue-devtools-status]][vue-devtools-package]               | Browser DevTools extension                              |
+```bash
+# run PHPUnit all test cases
+vendor/bin/phpunit
+# or Feature test only
+vendor/bin/phpunit --testsuite Feature
+```
 
-[vue-router]: https://github.com/vuejs/vue-router
-[vuex]: https://github.com/vuejs/vuex
-[vue-cli]: https://github.com/vuejs/vue-cli
-[vue-loader]: https://github.com/vuejs/vue-loader
-[vue-server-renderer]: https://github.com/vuejs/vue/tree/dev/packages/vue-server-renderer
-[vue-class-component]: https://github.com/vuejs/vue-class-component
-[vue-rx]: https://github.com/vuejs/vue-rx
-[vue-devtools]: https://github.com/vuejs/vue-devtools
-[vue-router-status]: https://img.shields.io/npm/v/vue-router.svg
-[vuex-status]: https://img.shields.io/npm/v/vuex.svg
-[vue-cli-status]: https://img.shields.io/npm/v/@vue/cli.svg
-[vue-loader-status]: https://img.shields.io/npm/v/vue-loader.svg
-[vue-server-renderer-status]: https://img.shields.io/npm/v/vue-server-renderer.svg
-[vue-class-component-status]: https://img.shields.io/npm/v/vue-class-component.svg
-[vue-rx-status]: https://img.shields.io/npm/v/vue-rx.svg
-[vue-devtools-status]: https://img.shields.io/chrome-web-store/v/nhdogjmejiglipccpnnnanhbledajbpd.svg
-[vue-router-package]: https://npmjs.com/package/vue-router
-[vuex-package]: https://npmjs.com/package/vuex
-[vue-cli-package]: https://npmjs.com/package/@vue/cli
-[vue-loader-package]: https://npmjs.com/package/vue-loader
-[vue-server-renderer-package]: https://npmjs.com/package/vue-server-renderer
-[vue-class-component-package]: https://npmjs.com/package/vue-class-component
-[vue-rx-package]: https://npmjs.com/package/vue-rx
-[vue-devtools-package]: https://chrome.google.com/webstore/detail/vuejs-devtools/nhdogjmejiglipccpnnnanhbledajbpd
+#### Code Coverage Report
 
-## Documentation
+```bash
+# reports is a directory name
+vendor/bin/phpunit --coverage-html reports/
+```
+A `reports` directory has been created for code coverage report. Open the dashboard.html.
 
-To check out [live examples](https://vuejs.org/v2/examples/) and docs, visit [vuejs.org](https://vuejs.org).
 
-## Questions
-
-For questions and support please use [the official forum](https://forum.vuejs.org) or [community chat](https://chat.vuejs.org/). The issue list of this repo is **exclusively** for bug reports and feature requests.
-
-## Issues
-
-Please make sure to read the [Issue Reporting Checklist](https://github.com/vuejs/vue/blob/dev/.github/CONTRIBUTING.md#issue-reporting-guidelines) before opening an issue. Issues not conforming to the guidelines may be closed immediately.
-
-## Changelog
-
-Detailed changes for each release are documented in the [release notes](https://github.com/vuejs/vue/releases).
-
-## Stay In Touch
-
-- [Twitter](https://twitter.com/vuejs)
-- [Blog](https://medium.com/the-vue-point)
-- [Job Board](https://vuejobs.com/?ref=vuejs)
-
-## Contribution
-
-Please make sure to read the [Contributing Guide](https://github.com/vuejs/vue/blob/dev/.github/CONTRIBUTING.md) before making a pull request. If you have a Vue-related project/component/tool, add it with a pull request to [this curated list](https://github.com/vuejs/awesome-vue)!
-
-Thank you to all the people who already contributed to Vue!
-
-<a href="https://github.com/vuejs/vue/graphs/contributors"><img src="https://opencollective.com/vuejs/contributors.svg?width=890" /></a>
+## Credit
+This repository is motivated by [Hujjat/laravStart](https://github.com/Hujjat/laravStart) and his awesome video tutorial in [Youtube](https://www.youtube.com/playlist?list=PLB4AdipoHpxaHDLIaMdtro1eXnQtl_UvE).
 
 ## License
 
-[MIT](https://opensource.org/licenses/MIT)
-
-Copyright (c) 2013-present, Yuxi (Evan) You
+[MIT license](https://opensource.org/licenses/MIT).
