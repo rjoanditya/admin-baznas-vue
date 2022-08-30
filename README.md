@@ -11,20 +11,13 @@ Frontend Application for Zakat Management at Baznas Surakarta, built with Vue JS
 
 ## Tech Specification
 
-- Vue 2 + Vue Router + Vuex + Vuelidate + Vue Numeric + Vue Multiselect + Vue Sidebar Menu
+- Vue 2 + Vue Router + Vuex + Vuelidate + Vue Numeric + Vue Multiselect + Vue Sidebar Menu + Floating Vue
 - Axios
-- Bootstrap Vue
+- Bootstrap + Bootstrap Vue
 - Fontawesome + pe7 Icon
 - Sweetalert2
 - XLSX
-
-## Features
-
-- Login
-- Dynamic Dashboard
-- Master Data Management
-- Transactions Management
-- Settings: Change Password
+- Moment js
 
 ## Prerequisite
 - Node JS
