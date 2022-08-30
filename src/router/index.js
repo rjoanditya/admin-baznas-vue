@@ -73,6 +73,10 @@ export default new Router({
           component: () => import('../Views/Admin/Pengeluaran.vue')
         },
         {
+          path: "/admin/transaksi",
+          component: () => import('../Views/Admin/Transaksi.vue')
+        },
+        {
           path: "/admin/settings",
           component: () => import('../Views/Admin/Settings.vue')
         },

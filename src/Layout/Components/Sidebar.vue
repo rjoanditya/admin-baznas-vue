@@ -117,6 +117,11 @@ export default {
           icon: "pe-7s-note2",
           href: "/admin/pengeluaran",
         },
+        {
+          title: "Data Transaksi",
+          icon: "pe-7s-note2",
+          href: "/admin/transaksi",
+        },
       ],
       adminMenu: [
         {
@@ -189,6 +194,11 @@ export default {
           title: "Data Pengeluaran",
           icon: "pe-7s-note2",
           href: "/admin/pengeluaran",
+        },
+        {
+          title: "Data Transaksi",
+          icon: "pe-7s-note2",
+          href: "/admin/transaksi",
         },
         // {
         //   header: true,
@@ -434,4 +444,5 @@ export default {
 };
 </script>
 
-<style></style>
+<style>
+</style>

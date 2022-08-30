@@ -1,12 +1,22 @@
 <template>
   <div>
-    <page-title :heading="heading" :subheading="subheading" :addtext="addtext" :clickHandler="onAdd"></page-title>
+    <div class="app-page-title">
+      <div class="page-title-wrapper">
+        <div class="page-title-heading">
+          <div>
+            {{ heading }}
+            <div class="page-title-subheading">
+              {{ subheading }}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
     <b-card class="main-card mb-4">
       <template #header>
         <b-row>
           <b-col cols="7">
             <h5 class="mb-0 mt-2">Tabel Pemasukan</h5>
-            <span>Total : <strong>{{ total | formatRp }}</strong></span>
           </b-col>
           <b-col cols="3" class="pr-0">
             <b-input-group>
@@ -385,7 +395,7 @@
 </template>
 
 <script>
-import PageTitle from "../../Layout/Components/PageTitle.vue";
+// import PageTitle from "../../Layout/Components/PageTitle.vue";
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
 import { required } from "vuelidate/lib/validators";
 import VueNumeric from "vue-numeric";
@@ -405,13 +415,13 @@ library.add(faPen, faTrash, faSearch, faInfo, faFilter, faFileExport);
 
 export default {
   components: {
-    PageTitle,
+    // PageTitle,
     VueNumeric,
     "font-awesome-icon": FontAwesomeIcon,
   },
   data: () => ({
-    heading: "Manajemen Transaksi Pemasukan",
-    subheading: "Halaman ini digunakan untuk mengelola transaksi pemasukan",
+    heading: "Manajemen Transaksi",
+    subheading: "Halaman ini digunakan untuk mengelola transaksi",
     addtext: "Tambah Pemasukan",
     fields: [
       { key: "index", label: "#" },
@@ -452,7 +462,6 @@ export default {
     category_id1: "",
     category_id2: "",
     category_id3: "",
-    total: 0,
     addForm: {
       id: "",
       type: "Pemasukan",
@@ -506,12 +515,9 @@ export default {
         .then((res) => {
           this.dataIncome = [];
           res.data.items.map((obj) => {
-            if (obj.is_income === 1 && obj.name !== "Transfer Balance")
+            if (obj.name !== "Transfer Balance")
               this.dataIncome.push(obj);
           });
-          this.total = this.dataIncome.reduce((result, value) => {
-            return result + value.amount;
-          }, 0);
         })
         .catch((err) => {
           console(err);
@@ -579,7 +585,7 @@ export default {
           // console.log(res.data.items);
           this.dataCategories1 = [];
           res.data.items.map((obj) => {
-            if (obj.is_income === 1 && obj.status === 1) this.dataCategories1.push(obj);
+            if (obj.status === 1) this.dataCategories1.push(obj);
           });
         })
         .catch((err) => {
@@ -593,7 +599,7 @@ export default {
         .then((res) => {
           this.dataCategories2 = [];
           res.data.items.map((obj) => {
-            if (obj.is_income === 1 && obj.status === 1) this.dataCategories2.push(obj);
+            if (obj.status === 1) this.dataCategories2.push(obj);
           });
         })
         .catch((err) => {
@@ -607,7 +613,7 @@ export default {
         .then((res) => {
           this.dataCategories3 = [];
           res.data.items.map((obj) => {
-            if (obj.is_income === 1 && obj.status === 1) this.dataCategories3.push(obj);
+            if (obj.status === 1) this.dataCategories3.push(obj);
           });
         })
         .catch((err) => {
@@ -621,7 +627,7 @@ export default {
         .then((res) => {
           this.dataCategoriesFiltered = [];
           res.data.items.map((obj) => {
-            if (obj.is_income === 1 && obj.status === 1 && obj.level === 3) this.dataCategoriesFiltered.push(obj);
+            if (obj.status === 1 && obj.level === 3) this.dataCategoriesFiltered.push(obj);
           });
         })
         .catch((err) => {
@@ -662,10 +668,10 @@ export default {
             `transactions/${this.filterDateStart}/date/${this.filterDateEnd}`
           )
           .then((res) => {
-            this.dataIncome = [];
-            res.data.items.map((a) => {
-              if (a.is_income === 1) this.dataIncome.push(a);
-            });
+            this.dataIncome = res.data.items;
+            // res.data.items.map((a) => {
+              // if (a.is_income === 1 &&) this.dataIncome.push(a);
+            // });
           })
           .catch((err) => {
             alert(err);
@@ -676,10 +682,10 @@ export default {
       this.$api
         .get(`transactions/balance/${this.filterKas}`)
         .then((res) => {
-          this.dataIncome = [];
-          res.data.items.map((a) => {
-            if (a.is_income === 1) this.dataIncome.push(a);
-          });
+          this.dataIncome = res.data.items;
+          // res.data.items.map((a) => {
+          //   if (a.is_income === 1) this.dataIncome.push(a);
+          // });
         })
         .catch((err) => {
           alert(err);
@@ -689,10 +695,10 @@ export default {
       this.$api
         .get(`transactions/category/${this.filterKategori}`)
         .then((res) => {
-          this.dataIncome = [];
-          res.data.items.map((a) => {
-            if (a.is_income === 1) this.dataIncome.push(a);
-          });
+          this.dataIncome = res.data.items;
+          // res.data.items.map((a) => {
+          //   if (a.is_income === 1) this.dataIncome.push(a);
+          // });
         })
         .catch((err) => {
           alert(err);
@@ -702,10 +708,10 @@ export default {
       this.$api
         .get(`transactions/user/${this.filterUser}`)
         .then((res) => {
-          this.dataIncome = [];
-          res.data.items.map((a) => {
-            if (a.is_income === 1) this.dataIncome.push(a);
-          });
+          this.dataIncome = res.data.items;
+          // res.data.items.map((a) => {
+          //   if (a.is_income === 1) this.dataIncome.push(a);
+          // });
         })
         .catch((err) => {
           alert(err);

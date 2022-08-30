@@ -1,16 +1,12 @@
 <template>
   <div>
-    <page-title
-      :heading="heading"
-      :subheading="subheading"
-      :addtext="addtext"
-      :clickHandler="onAdd"
-    ></page-title>
+    <page-title :heading="heading" :subheading="subheading" :addtext="addtext" :clickHandler="onAdd"></page-title>
     <b-card class="main-card mb-4">
       <template #header>
         <b-row>
           <b-col cols="7">
             <h5 class="mb-0 mt-2">Tabel Pengeluaran</h5>
+            <span>Total : <strong>{{  total | formatRp  }}</strong></span>
           </b-col>
           <b-col cols="3" class="pr-0">
             <b-input-group>
@@ -19,10 +15,7 @@
                   <font-awesome-icon icon="search" style="color: #fff" />
                 </b-input-group-text>
               </template>
-              <b-form-input
-                placeholder="Cari data ..."
-                v-model="searchInput"
-              ></b-form-input>
+              <b-form-input placeholder="Cari data ..." v-model="searchInput"></b-form-input>
             </b-input-group>
           </b-col>
           <b-col cols="1" class="mx-0 pr-0">
@@ -31,116 +24,61 @@
             </button>
           </b-col>
           <b-col cols="1" class="mx-0">
-            <button
-              class="btn btn-primary w-100"
-              id="popover-filter"
-              @click="exportTx"
-            >
+            <button class="btn btn-primary w-100" id="popover-filter" @click="exportTx">
               <font-awesome-icon icon="file-export" />
             </button>
           </b-col>
-          <b-popover
-            target="popover-filter"
-            placement="bottom"
-            triggers="focus"
-          >
+          <b-popover target="popover-filter" placement="bottom" triggers="focus">
             <b-tabs content-class="mt-2">
               <b-tab title="Tanggal" active>
                 <div class="filter-wrapper">
                   <div class="mb-1">
                     <span class="font-medium">Dari Tanggal</span>
-                    <input
-                      type="date"
-                      class="form-control"
-                      v-model="filterDateStart"
-                      @input="filterDates"
-                    />
+                    <input type="date" class="form-control" v-model="filterDateStart" @input="filterDates" />
                   </div>
                   <div>
                     <span class="font-medium">Hingga Tanggal</span>
-                    <input
-                      type="date"
-                      class="form-control"
-                      v-model="filterDateEnd"
-                      @input="filterDates"
-                    />
+                    <input type="date" class="form-control" v-model="filterDateEnd" @input="filterDates" />
                   </div>
                 </div>
-                <button
-                  @click="resetFilter"
-                  type="string"
-                  class="btn btn-success w-100 mt-2 mb-1 font-bold"
-                  style="letter-spacing: 1px"
-                >
+                <button @click="resetFilter" type="string" class="btn btn-success w-100 mt-2 mb-1 font-bold"
+                  style="letter-spacing: 1px">
                   RESET FILTER
                 </button>
               </b-tab>
               <b-tab title="Kas">
                 <div class="filter-wrapper">
-                  <multiselect
-                    id="filter-balance"
-                    v-model="filterKas"
-                    :options="dataBalances.map((blc) => blc.id)"
+                  <multiselect id="filter-balance" v-model="filterKas" :options="dataBalances.map((blc) => blc.id)"
                     :custom-label="
                       (opt) => dataBalances.find((x) => x.id == opt).name
-                    "
-                    :show-labels="false"
-                    @input="filterBalance"
-                    placeholder="Filter Kas"
-                  ></multiselect>
+                    " :show-labels="false" @input="filterBalance" placeholder="Filter Kas"></multiselect>
                 </div>
-                <button
-                  @click="resetFilter"
-                  type="string"
-                  class="btn btn-success w-100 mt-2 mb-1 font-bold text-white"
-                  style="letter-spacing: 1px"
-                >
+                <button @click="resetFilter" type="string" class="btn btn-success w-100 mt-2 mb-1 font-bold text-white"
+                  style="letter-spacing: 1px">
                   RESET FILTER
                 </button>
               </b-tab>
               <b-tab title="Kategori">
                 <div class="filter-wrapper">
-                  <multiselect
-                    id="filter-kategori"
-                    v-model="filterKategori"
-                    :options="dataCategories3.map((ctg) => ctg.id)"
-                    :custom-label="
-                      (opt) => dataCategories3.find((x) => x.id == opt).name
-                    "
-                    :show-labels="false"
-                    @input="filterCategories1"
-                    placeholder="Filter Kategori"
-                  ></multiselect>
+                  <multiselect id="filter-kategori" v-model="filterKategori"
+                    :options="dataCategoriesFiltered.map((ctg) => ctg.id)" :custom-label="
+                      (opt) => dataCategoriesFiltered.find((x) => x.id == opt).name
+                    " :show-labels="false" @input="filterCategories1" placeholder="Filter Kategori"></multiselect>
                 </div>
-                <button
-                  @click="resetFilter"
-                  type="string"
-                  class="btn btn-success w-100 mt-2 mb-1 font-bold text-white"
-                  style="letter-spacing: 1px"
-                >
+                <button @click="resetFilter" type="string" class="btn btn-success w-100 mt-2 mb-1 font-bold text-white"
+                  style="letter-spacing: 1px">
                   RESET FILTER
                 </button>
               </b-tab>
               <b-tab title="User">
                 <div class="filter-wrapper">
-                  <multiselect
-                    id="filter-kategori"
-                    v-model="filterUser"
-                    :options="dataUsers.map((usr) => usr.id)"
+                  <multiselect id="filter-kategori" v-model="filterUser" :options="dataUsers.map((usr) => usr.id)"
                     :custom-label="
                       (opt) => dataUsers.find((x) => x.id == opt).username
-                    "
-                    :show-labels="false"
-                    @input="filterUsers"
-                    placeholder="Filter User"
-                  ></multiselect>
+                    " :show-labels="false" @input="filterUsers" placeholder="Filter User"></multiselect>
                 </div>
-                <button
-                  @click="resetFilter"
-                  type="string"
-                  class="btn btn-success w-100 mt-2 mb-1 font-bold text-white"
-                  style="letter-spacing: 1px"
-                >
+                <button @click="resetFilter" type="string" class="btn btn-success w-100 mt-2 mb-1 font-bold text-white"
+                  style="letter-spacing: 1px">
                   RESET FILTER
                 </button>
               </b-tab>
@@ -148,57 +86,42 @@
           </b-popover>
         </b-row>
       </template>
-      <b-table
-        id="payment-table"
-        small
-        :fields="fields"
-        :items="dataOutcome"
-        :hover="true"
-        :filter="searchInput"
-        :per-page="perPage"
-        :current-page="currentPage"
-        responsive="sm"
-        tbody-tr-class="payment-data"
-        show-empty
-      >
+      <b-table id="payment-table" small :fields="fields" :items="dataOutcome" :hover="true" :filter="searchInput"
+        :per-page="perPage" :current-page="currentPage" responsive="sm" tbody-tr-class="payment-data" show-empty>
         <template #cell(index)="data">
-          {{ data.index + 1 }}
+          {{  data.index + 1  }}
         </template>
 
         <template #cell(tanggal)="data">
-          {{ data.item.created_at | formatDate }}
+          {{  data.item.created_at | formatDate  }}
         </template>
 
         <!-- A virtual column -->
         <template #cell(user)="data">
           <div v-if="data.item.user != null">
-            {{ data.item.user.first_name }}
+            {{  data.item.user.first_name  }}
           </div>
         </template>
 
         <template #cell(category)="data">
           <div v-if="data.item.category != null">
-            {{ data.item.category.name }}
+            {{  data.item.category.name  }}
           </div>
         </template>
 
         <template #cell(payment)="data">
           <div v-if="data.item.payment != null">
-            {{ data.item.payment.name }}
+            {{  data.item.payment.name  }}
           </div>
         </template>
 
         <template #cell(amount)="data">
-          {{ data.item.amount | formatRp }}
+          {{  data.item.amount | formatRp  }}
         </template>
 
         <template v-slot:cell(actions)="{ item }">
           <div class="row action-wrapper">
-            <div
-              class="action-btn"
-              style="padding: 2px 9px"
-              @click="onDetail(item)"
-            >
+            <div class="action-btn" style="padding: 2px 9px" @click="onDetail(item)">
               <font-awesome-icon icon="info" />
             </div>
             <div class="action-btn" @click="onEdit(item)">
@@ -212,24 +135,13 @@
       </b-table>
       <b-row>
         <b-col cols="2">
-          <b-form-select
-            v-model="perPage"
-            :options="[5, 10, 25]"
-            class="per-page"
-            @change="fetchOutcome"
-          >
+          <b-form-select v-model="perPage" :options="[5, 10, 25]" class="per-page" @change="fetchOutcome">
           </b-form-select>
           data
         </b-col>
         <b-col cols="10">
-          <b-pagination
-            v-model="currentPage"
-            :total-rows="rows"
-            :per-page="perPage"
-            align="right"
-            aria-controls="payment-table"
-            class="mb-1"
-          >
+          <b-pagination v-model="currentPage" :total-rows="rows" :per-page="perPage" align="right"
+            aria-controls="payment-table" class="mb-1">
           </b-pagination>
         </b-col>
       </b-row>
@@ -237,7 +149,7 @@
 
     <b-modal id="modal-income" hide-footer>
       <template #modal-title>
-        <div class="font-bold fsz-22 ml-1 mt-1">{{ modalTitle }}</div>
+        <div class="font-bold fsz-22 ml-1 mt-1">{{  modalTitle  }}</div>
       </template>
       <template #default="{ hide }">
         <!-- <p class="">Modal Body with button</p> -->
@@ -267,15 +179,8 @@
             <label for="tx-name" class="font-bold fsz-14">
               Nama Transaksi <span class="red">*</span>
             </label>
-            <input
-              type="text"
-              class="form-control"
-              :class="{ 'is-invalid': $v.addForm.name.$error }"
-              id="tx-name"
-              v-model="$v.addForm.name.$model"
-              placeholder="Masukkan nama transaksi"
-              :disabled="isDisabled"
-            />
+            <input type="text" class="form-control" :class="{ 'is-invalid': $v.addForm.name.$error }" id="tx-name"
+              v-model="$v.addForm.name.$model" placeholder="Masukkan nama transaksi" :disabled="isDisabled" />
             <b-form-invalid-feedback id="tx-name">
               Nama transaksi tidak boleh kosong
             </b-form-invalid-feedback>
@@ -285,15 +190,8 @@
             <label for="tx-contact" class="font-bold fsz-14">
               Kontak <span class="red">*</span>
             </label>
-            <input
-              type="text"
-              class="form-control"
-              :class="{ 'is-invalid': $v.addForm.contact.$error }"
-              id="tx-contact"
-              v-model="$v.addForm.contact.$model"
-              placeholder="Masukkan nama pembayaran"
-              :disabled="isDisabled"
-            />
+            <input type="text" class="form-control" :class="{ 'is-invalid': $v.addForm.contact.$error }" id="tx-contact"
+              v-model="$v.addForm.contact.$model" placeholder="Masukkan nama pembayaran" :disabled="isDisabled" />
             <b-form-invalid-feedback id="tx-contact">
               Kontak pembayaran tidak boleh kosong
             </b-form-invalid-feedback>
@@ -303,15 +201,9 @@
             <label for="tx-contactname" class="font-bold fsz-14">
               Nama Kontak <span class="red">*</span>
             </label>
-            <input
-              type="text"
-              class="form-control"
-              :class="{ 'is-invalid': $v.addForm.contact_name.$error }"
-              id="tx-contactname"
-              v-model="$v.addForm.contact_name.$model"
-              placeholder="Masukkan nama pembayaran"
-              :disabled="isDisabled"
-            />
+            <input type="text" class="form-control" :class="{ 'is-invalid': $v.addForm.contact_name.$error }"
+              id="tx-contactname" v-model="$v.addForm.contact_name.$model" placeholder="Masukkan nama pembayaran"
+              :disabled="isDisabled" />
             <b-form-invalid-feedback id="tx-contactname">
               Nama kontak pembayaran tidak boleh kosong
             </b-form-invalid-feedback>
@@ -321,16 +213,9 @@
             <label for="tx-amount" class="font-bold fsz-14">
               Nominal <span class="red">*</span>
             </label>
-            <vue-numeric
-              id="tx-amount"
-              class="form-control"
-              :class="{ 'is-invalid': $v.addForm.amount.$error }"
-              currency="Rp"
-              separator="."
-              placeholder="Masukkan nama pembayaran"
-              v-model="$v.addForm.amount.$model"
-              :disabled="isDisabled"
-            ></vue-numeric>
+            <vue-numeric id="tx-amount" class="form-control" :class="{ 'is-invalid': $v.addForm.amount.$error }"
+              currency="Rp" separator="." placeholder="Masukkan nama pembayaran" v-model="$v.addForm.amount.$model"
+              :disabled="isDisabled"></vue-numeric>
             <b-form-invalid-feedback id="tx-amount">
               Nominal pembayaran tidak boleh kosong
             </b-form-invalid-feedback>
@@ -340,20 +225,13 @@
             <label for="tx-payment" class="font-bold fsz-14">
               Jenis Pembayaran <span class="red">*</span>
             </label>
-            <multiselect
-              id="tx-payment"
-              v-model="$v.addForm.payment_id.$model"
-              :options="dataPayments.map((pay) => pay.id)"
-              :custom-label="
+            <multiselect id="tx-payment" v-model="$v.addForm.payment_id.$model"
+              :options="dataPayments.map((pay) => pay.id)" :custom-label="
                 (opt) => dataPayments.find((x) => x.id == opt).name
-              "
-              placeholder="Pilih jenis pembayaran"
-              :class="{
-                invalid: $v.addForm.payment_id.$error,
-                'multiselect-custom': !$v.addForm.payment_id.$error,
-              }"
-              :disabled="isDisabled"
-            ></multiselect>
+              " placeholder="Pilih jenis pembayaran" :class="{
+  invalid: $v.addForm.payment_id.$error,
+  'multiselect-custom': !$v.addForm.payment_id.$error,
+}" :disabled="isDisabled"></multiselect>
             <small v-if="$v.addForm.payment_id.$error" class="red">
               Jenis pembayaran tidak boleh kosong
             </small>
@@ -363,20 +241,13 @@
             <label for="tx-payment" class="font-bold fsz-14">
               Akun Pembayaran <span class="red">*</span>
             </label>
-            <multiselect
-              id="tx-payment"
-              v-model="$v.addForm.account_id.$model"
-              :options="dataAccounts.map((acc) => acc.id)"
-              :custom-label="
+            <multiselect id="tx-payment" v-model="$v.addForm.account_id.$model"
+              :options="dataAccounts.map((acc) => acc.id)" :custom-label="
                 (opt) => dataAccounts.find((x) => x.id == opt).name
-              "
-              placeholder="Pilih jenis pembayaran"
-              :class="{
-                invalid: $v.addForm.account_id.$error,
-                'multiselect-custom': !$v.addForm.account_id.$error,
-              }"
-              :disabled="isDisabled"
-            ></multiselect>
+              " placeholder="Pilih jenis pembayaran" :class="{
+  invalid: $v.addForm.account_id.$error,
+  'multiselect-custom': !$v.addForm.account_id.$error,
+}" :disabled="isDisabled"></multiselect>
             <small v-if="$v.addForm.account_id.$error" class="red">
               Akun pembayaran tidak boleh kosong
             </small>
@@ -409,23 +280,14 @@
             <label for="tx-balance" class="font-bold fsz-14">
               Nama Kategori Lv 1 <span class="red">*</span>
             </label>
-            <multiselect
-              id="tx-balance"
-              v-model="$v.category_id1.$model"
-              :options="dataCategories1.map((blc) => blc.id)"
-              :custom-label="
+            <multiselect id="tx-balance" v-model="$v.category_id1.$model"
+              :options="dataCategories1.map((blc) => blc.id)" :custom-label="
                 (opt) => dataCategories1.find((x) => x.id == opt).name
-              "
-              placeholder="Pilih jenis kategori"
-              :allow-empty="false"
-              :hideSelected="true"
-              @input="fetchCategories2"
+              " placeholder="Pilih jenis kategori" :allow-empty="false" :hideSelected="true" @input="fetchCategories2"
               :class="{
                 invalid: $v.category_id1.$error,
                 'multiselect-custom': !$v.category_id1.$error,
-              }"
-              :disabled="isDisabled"
-            ></multiselect>
+              }" :disabled="isDisabled"></multiselect>
             <small v-if="$v.category_id1.$error" class="red">
               Kategori level 1 tidak boleh kosong
             </small>
@@ -435,23 +297,14 @@
             <label for="tx-balance" class="font-bold fsz-14">
               Nama Kategori Lv 2 <span class="red">*</span>
             </label>
-            <multiselect
-              id="tx-balance"
-              v-model="$v.category_id2.$model"
-              :options="dataCategories2.map((blc) => blc.id)"
-              :custom-label="
+            <multiselect id="tx-balance" v-model="$v.category_id2.$model"
+              :options="dataCategories2.map((blc) => blc.id)" :custom-label="
                 (opt) => dataCategories2.find((x) => x.id == opt).name
-              "
-              placeholder="Pilih jenis kategori"
-              :allow-empty="false"
-              :hideSelected="true"
-              @input="fetchCategories3"
+              " placeholder="Pilih jenis kategori" :allow-empty="false" :hideSelected="true" @input="fetchCategories3"
               :class="{
                 invalid: $v.category_id2.$error,
                 'multiselect-custom': !$v.category_id2.$error,
-              }"
-              :disabled="isDisabled"
-            ></multiselect>
+              }" :disabled="isDisabled"></multiselect>
             <small v-if="$v.category_id2.$error" class="red">
               Kategori level 2 tidak boleh kosong
             </small>
@@ -461,22 +314,13 @@
             <label for="tx-balance" class="font-bold fsz-14">
               Nama Kategori Lv 3 <span class="red">*</span>
             </label>
-            <multiselect
-              id="tx-balance"
-              v-model="$v.category_id3.$model"
-              :options="dataCategories3.map((blc) => blc.id)"
-              :custom-label="
+            <multiselect id="tx-balance" v-model="$v.category_id3.$model"
+              :options="dataCategories3.map((blc) => blc.id)" :custom-label="
                 (opt) => dataCategories3.find((x) => x.id == opt).name
-              "
-              placeholder="Pilih jenis kategori"
-              :allow-empty="false"
-              :hideSelected="true"
-              :class="{
-                invalid: $v.category_id3.$error,
-                'multiselect-custom': !$v.category_id3.$error,
-              }"
-              :disabled="isDisabled"
-            ></multiselect>
+              " placeholder="Pilih jenis kategori" :allow-empty="false" :hideSelected="true" :class="{
+  invalid: $v.category_id3.$error,
+  'multiselect-custom': !$v.category_id3.$error,
+}" :disabled="isDisabled"></multiselect>
             <small v-if="$v.category_id3.$error" class="red">
               Kategori level 3 tidak boleh kosong
             </small>
@@ -484,20 +328,13 @@
 
           <div class="form-group">
             <label for="tx-balance" class="font-bold fsz-14"> Nama Kas </label>
-            <multiselect
-              id="tx-balance"
-              v-model="$v.addForm.balance_id.$model"
-              :options="dataBalances.map((blc) => blc.id)"
-              :custom-label="
+            <multiselect id="tx-balance" v-model="$v.addForm.balance_id.$model"
+              :options="dataBalances.map((blc) => blc.id)" :custom-label="
                 (opt) => dataBalances.find((x) => x.id == opt).name
-              "
-              placeholder="Pilih jenis kas"
-              :class="{
-                invalid: $v.addForm.balance_id.$error,
-                'multiselect-custom': !$v.addForm.balance_id.$error,
-              }"
-              :disabled="isDisabled"
-            ></multiselect>
+              " placeholder="Pilih jenis kas" :class="{
+  invalid: $v.addForm.balance_id.$error,
+  'multiselect-custom': !$v.addForm.balance_id.$error,
+}" :disabled="isDisabled"></multiselect>
             <small v-if="$v.addForm.balance_id.$error" class="red">
               Jenis kas tidak boleh kosong
             </small>
@@ -505,27 +342,13 @@
 
           <div class="form-group">
             <label for="tx-note" class="font-bold fsz-14"> Catatan </label>
-            <b-form-textarea
-              v-if="isDisabled"
-              id="tx-note"
-              :class="{
-                'is-invalid': $v.addForm.note.$error,
-              }"
-              v-model="$v.addForm.note.$model"
-              rows="3"
-              disabled
-            >
+            <b-form-textarea v-if="isDisabled" id="tx-note" :class="{
+              'is-invalid': $v.addForm.note.$error,
+            }" v-model="$v.addForm.note.$model" rows="3" disabled>
             </b-form-textarea>
-            <b-form-textarea
-              v-else
-              id="tx-note"
-              :class="{
-                'is-invalid': $v.addForm.note.$error,
-              }"
-              v-model="$v.addForm.note.$model"
-              placeholder="Masukkan catatan"
-              rows="3"
-            >
+            <b-form-textarea v-else id="tx-note" :class="{
+              'is-invalid': $v.addForm.note.$error,
+            }" v-model="$v.addForm.note.$model" placeholder="Masukkan catatan" rows="3">
             </b-form-textarea>
           </div>
 
@@ -533,27 +356,13 @@
             <label for="tx-description" class="font-bold fsz-14">
               Deskripsi
             </label>
-            <b-form-textarea
-              v-if="isDisabled"
-              id="tx-description"
-              :class="{
-                'is-invalid': $v.addForm.description.$error,
-              }"
-              v-model="$v.addForm.description.$model"
-              rows="3"
-              disabled
-            >
+            <b-form-textarea v-if="isDisabled" id="tx-description" :class="{
+              'is-invalid': $v.addForm.description.$error,
+            }" v-model="$v.addForm.description.$model" rows="3" disabled>
             </b-form-textarea>
-            <b-form-textarea
-              v-else
-              id="tx-description"
-              :class="{
-                'is-invalid': $v.addForm.description.$error,
-              }"
-              v-model="$v.addForm.description.$model"
-              placeholder="Masukkan deskripsi transaksi"
-              rows="3"
-            >
+            <b-form-textarea v-else id="tx-description" :class="{
+              'is-invalid': $v.addForm.description.$error,
+            }" v-model="$v.addForm.description.$model" placeholder="Masukkan deskripsi transaksi" rows="3">
             </b-form-textarea>
           </div>
 
@@ -573,11 +382,7 @@
               Nama jenis pembayaran tidak boleh kosong
             </b-form-invalid-feedback>
           </div> -->
-          <button
-            type="submit"
-            class="btn btn-primary w-100 my-3 py-2 font-bold"
-            v-if="!isDisabled"
-          >
+          <button type="submit" class="btn btn-primary w-100 my-3 py-2 font-bold" v-if="!isDisabled">
             Simpan Transaksi
           </button>
         </form>
@@ -655,6 +460,7 @@ export default {
     category_id1: "",
     category_id2: "",
     category_id3: "",
+    total: 0,
     addForm: {
       id: "",
       type: "Pengeluaran",
@@ -683,7 +489,7 @@ export default {
       name: { required },
       contact: { required },
       contact_name: { required },
-      user_id: { },
+      user_id: {},
       balance_id: {},
       category_id: { required },
       payment_id: { required },
@@ -711,9 +517,11 @@ export default {
             if (obj.is_income === 0 && obj.name !== "Transfer Balance")
               this.dataOutcome.push(obj);
           });
+          this.total = this.dataOutcome.reduce((result, value) => {
+            return result + value.amount;
+          }, 0);
         })
         .catch((err) => {
-          console(err);
           alert(err);
         });
     },
@@ -727,7 +535,6 @@ export default {
           });
         })
         .catch((err) => {
-          console(err);
           alert(err);
         });
     },
@@ -805,15 +612,20 @@ export default {
           alert(err);
         });
     },
-    // filterCategories() {
-    //   if (this.level !== "") {
-    //     this.addForm.category_id = "";
-    //     this.dataCategoriesFiltered = [];
-    //     this.dataCategories.map((a) => {
-    //       if (a.level === this.level) this.dataCategoriesFiltered.push(a);
-    //     });
-    //   }
-    // },
+    filterCategories() {
+      this.$api
+        .get(`categories`)
+        .then((res) => {
+          this.dataCategoriesFiltered = [];
+          res.data.items.map((obj) => {
+            if (obj.is_income === 0 && obj.status === 1 && obj.level === 3) this.dataCategoriesFiltered.push(obj);
+          });
+        })
+        .catch((err) => {
+          console(err);
+          alert(err);
+        });
+    },
     resetForm() {
       this.addForm = {
         id: "",
@@ -1165,6 +977,7 @@ export default {
     this.fetchPayments();
     this.fetchBalances();
     this.fetchCategories1();
+    this.filterCategories();
     // this.fetchCategories2();
     // this.fetchCategories3();
   },

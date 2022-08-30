@@ -506,6 +506,9 @@ export default {
           //   parent = this.addForm.parent_id.id;
           // }
           // console.log(this.addForm.parent_id);
+          if(this.addForm.level === 1){
+            this.addForm.parent_id = "3fa85f64-5717-4562-b3fc-2c963f66afa6";
+          }
           if (this.addForm.is_income.value === 1) {
             this.addForm.category = "Pemasukan";
           } else {
