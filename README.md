@@ -26,7 +26,7 @@ Frontend Application for Zakat Management at Baznas Surakarta, built with Vue JS
 
 ## Installation
 
-- `git clone https://github.com/pratamayp/admin-baznas-vue`
+- `git clone https://github.com/pratamayp/admin-baznas-vue.git`
 - `cd admin-baznas-vue/`
 - `yarn install`
 - `yarn serve`
